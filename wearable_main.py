@@ -185,8 +185,8 @@ for block in range(totalblock):
     sv_name = f'confusion_mat_{block+1}.npy'
     np.save(sv_name, all_conf_matrix.numpy())  # TensorFlow tensor를 NumPy 배열로 변환하여 저장
 
-sv_name = 'acc_matrix.npy'
-np.save(sv_name, acc_matrix)
+    sv_name = 'acc_matrix.npy'
+    np.save(sv_name, acc_matrix)
 
 itr_matrix = itr(acc_matrix, totalcharacter, visual_cue + signal_length)
 
