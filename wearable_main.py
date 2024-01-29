@@ -12,31 +12,21 @@ import tensorflow as tf
 from itr import itr
 #Specifications
 subban_no = 3 # the number of subbands == bandpass filters
-dataset = 'Bench' # Bench or BETA dataset
-signal_length = 0.4 #Signal length in second
+dataset = 'Wearable' # Bench or BETA dataset
+signal_length = 1.5 #Signal length in second
 
-if dataset == "Bench":
-    totalsubject = 50 # the number of subjects
-    totalblock = 6 # the number of blocks
-    totalcharacter = 12 # the number of characters
-    sampling_rate = 250 # Sampling Rate
-    visual_latency = 0.14 # Average visual latency of subjects
-    visual_cue = 0.5 # Length of visual cue used at collection of the dataset
-    sample_length = int(sampling_rate * signal_length) # Sample length
-    total_ch = 64 # the number of channels used at collection of the dataset
-    max_epochs = 800 # the number of epochs for first stage  ORIGINAL VALUE = 1000 !!!
-    dropout_second_stage = 0.6 #Dropout probabilities of first two dropout layers at second stage
-elif dataset == "BETA":
-    total_subject = 70  # the number of subjects
-    total_block = 4  # the number of blocks
-    total_character = 40  # the number of characters
-    sampling_rate = 250  # Sampling Rate
-    visual_latency = 0.13  # Average visual latency of subjects
-    visual_cue = 0.5  # Length of visual cue used at collection of the dataset
-    sample_length = int(sampling_rate * signal_length)  # Sample length
-    total_ch = 64  # the number of channels used at collection of the dataset
-    max_epochs = 800  # the number of epochs for first stage
-    dropout_second_stage = 0.7  # Dropout probabilities of first two dropout layers at second stage
+
+totalsubject = 50 # the number of subjects
+totalblock = 6 # the number of blocks
+totalcharacter = 12 # the number of characters
+sampling_rate = 250 # Sampling Rate
+visual_latency = 0.14 # Average visual latency of subjects
+visual_cue = 0.5 # Length of visual cue used at collection of the dataset
+sample_length = int(sampling_rate * signal_length) # Sample length
+total_ch = 64 # the number of channels used at collection of the dataset
+max_epochs = 800 # the number of epochs for first stage  ORIGINAL VALUE = 1000 !!!
+dropout_second_stage = 0.6 #Dropout probabilities of first two dropout layers at second stage
+
 
 # Preprocessing
 total_delay = visual_latency + visual_cue # Total undesired signal length in seconds
@@ -195,7 +185,9 @@ for block in range(totalblock):
     sv_name = f'confusion_mat_{block+1}.npy'
     np.save(sv_name, all_conf_matrix.numpy())  # TensorFlow tensor를 NumPy 배열로 변환하여 저장
 
-    sv_name = 'acc_matrix.npy'
-    np.save(sv_name, acc_matrix)
+sv_name = 'acc_matrix.npy'
+np.save(sv_name, acc_matrix)
 
 itr_matrix = itr(acc_matrix, totalcharacter, visual_cue + signal_length)
+
+print(itr_matrix)
