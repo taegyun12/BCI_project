@@ -30,8 +30,8 @@ def pre_process(channels, sample_length, sample_interval, subban_no, totalsubjec
     mat_file = io.loadmat('/home/heejae/data/Subjects_Information.mat')
     male_subject_indices = [index for index, subject in enumerate(mat_file['Subjects_Information']) if subject[1][0] == 'Male']
     female_subject_indices = [index for index, subject in enumerate(mat_file['Subjects_Information']) if subject[1][0] == 'Female']
-    male_index = np.random.choice(male_subject_indices, 25)
-    female_index = np.random.choice(female_subject_indices, 25)
+    male_index = male_subject_indices[:25] 
+    female_index = female_subject_indices[:25] 
     subject_index = np.concatenate((male_index, female_index), axis=0)
 
 
@@ -64,11 +64,7 @@ def pre_process(channels, sample_length, sample_interval, subban_no, totalsubjec
         
         for  chr in range(totalcharacter):
             for blk in range(totalblock):
-                if dataset == 'Bench':
-                    tmp_raw = sub_data[:, :, chr, blk]
-                elif dataset == 'BETA':
-                    tmp_raw = sub_data[:, :, blk, chr]
-
+                tmp_raw = sub_data[:, :, chr, blk] 
                 for i in range(subban_no):
                     processed_signal = np.zeros((total_channels, sample_length))
                     for j in range(total_channels):
